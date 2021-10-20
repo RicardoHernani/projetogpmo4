@@ -8,11 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Usuario implements Serializable {
@@ -26,13 +24,8 @@ public class Usuario implements Serializable {
 	private String email;
 	private String senha;
 	
-	
-	@JsonManagedReference
-	@ManyToMany
-	@JoinTable(name = "USUARIO_PACIENTE",
-		joinColumns = @JoinColumn(name="usuario_id"),
-		inverseJoinColumns = @JoinColumn(name = "paciente_id")
-	)
+	@JsonIgnore
+	@OneToMany(mappedBy="usuario")
 	private List<Paciente> pacientes = new ArrayList<>();
 	
 	public Usuario() {

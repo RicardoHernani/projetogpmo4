@@ -1,17 +1,15 @@
 package com.chavesricardo.projetogpmo4.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -26,17 +24,18 @@ public class Cirurgia implements Serializable {
 	private Date data;
 	
 	
-	@JsonBackReference	
-	@ManyToMany(mappedBy="cirurgias")
-	private List<Paciente> pacientes = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name="paciente_Id")
+	private Paciente paciente;
 	
 	public Cirurgia() {
 	}
 
-	public Cirurgia(Integer id, Date data) {
+	public Cirurgia(Integer id, Date data, Paciente paciente) {
 		super();
 		this.id = id;
-		this.data = data;		
+		this.data = data;
+		this.paciente = paciente;
 	}
 
 	public Integer getId() {
@@ -54,13 +53,13 @@ public class Cirurgia implements Serializable {
 	public void setData(Date data) {
 		this.data = data;
 	}
-	
-	public List<Paciente> getPacientes() {
-		return pacientes;
+
+	public Paciente getPaciente() {
+		return paciente;
 	}
 
-	public void setPacientes(List<Paciente> pacientes) {
-		this.pacientes = pacientes;
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
 	}
 
 	@Override

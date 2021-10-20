@@ -9,11 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Paciente implements Serializable {
@@ -24,30 +23,26 @@ public class Paciente implements Serializable {
 	private Integer id;
 	
 	private Integer prontuario;
-		
-	@JsonBackReference
-	@ManyToMany(mappedBy="pacientes")
-	private List<Usuario> usuarios = new ArrayList<>();
 	
-
-	@JsonManagedReference
-	@ManyToMany
-	@JoinTable(name = "PACIENTE_CIRURGIA",
-		joinColumns = @JoinColumn(name="paciente_cirurgia_id"),
-		inverseJoinColumns = @JoinColumn(name = "cirurgia_id")
-	)
+	@ManyToOne
+	@JoinColumn(name="usuario_Id")
+	private Usuario usuario;
+	
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="paciente")
 	private List<Cirurgia> cirurgias = new ArrayList<>();
 	
 	public Paciente() {
 	}
 
-	public Paciente(Integer id, Integer prontuario) {
+	public Paciente(Integer id, Integer prontuario, Usuario usuario) {
 		super();
 		this.id = id;
 		this.prontuario = prontuario;
-		
+		this.usuario = usuario;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -60,8 +55,16 @@ public class Paciente implements Serializable {
 		return prontuario;
 	}
 
-	public void setProntuario(Integer registro) {
-		this.prontuario = registro;
+	public void setProntuario(Integer prontuario) {
+		this.prontuario = prontuario;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public List<Cirurgia> getCirurgias() {
@@ -70,14 +73,6 @@ public class Paciente implements Serializable {
 
 	public void setCirurgias(List<Cirurgia> cirurgias) {
 		this.cirurgias = cirurgias;
-	}
-	
-	public List<Usuario> getUsuarios() {
-		return usuarios;
-	}
-
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
 	}
 
 	@Override

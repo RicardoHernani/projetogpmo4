@@ -14,7 +14,8 @@ import com.chavesricardo.projetogpmo4.domain.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	
-	@Query(value ="SELECT * FROM USUARIO, PACIENTE, CIRURGIA, PACIENTE_CIRURGIA, USUARIO_PACIENTE WHERE USUARIO.ID=USUARIO_ID AND PACIENTE.ID=PACIENTE_ID AND CIRURGIA.ID=CIRURGIA_ID AND PACIENTE_CIRURGIA_ID=PACIENTE_ID AND USUARIO.ID= :usuario AND (DATA BETWEEN :dataInicial AND :dataFinal)", nativeQuery = true)
+	@Query(value ="SELECT * FROM USUARIO, PACIENTE, CIRURGIA WHERE USUARIO.ID=PACIENTE.USUARIO_ID AND PACIENTE.ID=CIRURGIA.PACIENTE_ID AND USUARIO.ID= :usuario AND (DATA>= :dataInicial AND DATA<= :dataFinal)", nativeQuery = true)
 	Page<Usuario> search(@Param("usuario") Integer usuario, @Param("dataInicial") Date dataInicial, @Param("dataFinal") Date dataFinal, Pageable pageRequest);
 
 }
+

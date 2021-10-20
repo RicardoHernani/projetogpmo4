@@ -28,7 +28,7 @@ import com.chavesricardo.projetogpmo4.services.UsuarioService;
 				@RequestParam(value="dataFinal", defaultValue="") String dataFinal,     //Parâmetros podem ser inteiros ou Strings nas requisições URL's
 				@RequestParam(value="page", defaultValue="0") Integer page,
 				@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
-				@RequestParam(value="orderBy", defaultValue="data") String orderBy,
+				@RequestParam(value="orderBy", defaultValue="nome") String orderBy,
 				@RequestParam(value="direction", defaultValue="ASC") String direction) {
 			
 			Date inicio = URL.convertDate(dataInicial, new Date(0L));
