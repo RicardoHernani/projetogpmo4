@@ -29,8 +29,9 @@ public class Paciente implements Serializable {
 	private Usuario usuario;
 	
 	
-	@JsonIgnore
+	
 	@OneToMany(mappedBy="paciente")
+	@JsonIgnore
 	private List<Cirurgia> cirurgias = new ArrayList<>();
 	
 	public Paciente() {
